@@ -1,95 +1,258 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client";
 
+import { useSession } from "next-auth/react";
+import { useRef } from "react";
+import axios from "axios";
+import "@/app/globals.css";
+import { Post } from "@/globals/GlobalTypes";
+import { useState, useEffect, useContext } from "react";
+import {
+  Main,
+  PostGrid,
+  Card,
+  CardTitle,
+  CardImage,
+  CardFooter,
+  CommentButton,
+  LikeButton,
+  ShareButton,
+  CardDescription,
+  ProfileImage,
+  UserInfo,
+  Username,
+  Button,
+  CardImageContainer,
+} from "@/globals/GlobalStyles";
+
+import { Like, Comment, Share } from "@/globals/GlobalIcons";
+import CommentSection from "@/components/CommentSection";
+import { AppContext } from "@/context/GlobalContext";
+import { AppContextType } from "@/globals/GlobalTypes";
+import { useRouter } from "next/navigation";
+import ShareSection from "@/components/Share";
 export default function Home() {
+  const commentSectionRef = useRef<HTMLDivElement | null>(null);
+  const shareSectionRef = useRef<HTMLDivElement | null>(null);
+
+  const [commentSection, setCommentSection] = useState(false);
+  const [commentPost, setCommentPost] = useState<Post>();
+  const [sharePost, setSharePost] = useState<Post>();
+  const [shareSection, setShareSection] = useState(false);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [postsLS, setPostsLS] = useState<Post[]>(); // Posts from localstorage
+  const { savePostsToLocalStorage, updatePostLikes } =
+    useContext<AppContextType>(AppContext);
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchAllPosts = async () => {
+      const response = await axios.get("/api/posts");
+      // console.log(response.data.posts);
+      if (!response.data.posts) {
+        return null;
+      }
+      setPosts(response.data.posts);
+      savePostsToLocalStorage(response.data.posts);
+      setPostsLS(JSON.parse(localStorage.getItem("All_Posts") || ""));
+    };
+
+    fetchAllPosts();
+
+    return () => {
+      // console.log("Unmounting All Posts Handler");
+    };
+  }, [commentSection, savePostsToLocalStorage]);
+
+  useEffect(() => {
+    const handleStrayClicks = (e: any) => {
+      if (
+        (commentSectionRef.current &&
+          !commentSectionRef.current.contains(e.target) &&
+          commentSection) ||
+        (shareSectionRef.current &&
+          !shareSectionRef.current.contains(e.target) &&
+          shareSection)
+      ) {
+        setCommentSection(false);
+        setShareSection(false);
+      }
+    };
+
+    document.addEventListener("click", handleStrayClicks);
+
+    return () => {
+      document.removeEventListener("click", handleStrayClicks);
+    };
+  }, [commentSection, shareSection]);
+
+  const likeAPost = async (post: Post) => {
+    try {
+      const response = await axios.post(
+        `/api/post-update/?email=${post?.email}&id=${post._id}`
+      );
+      // console.log(response.data);
+
+      const updatedPosts = postsLS?.map((p: Post) =>
+        p._id === post._id ? { ...p, likes: Number(p.likes) + 1 } : p
+      );
+      setPostsLS(updatedPosts);
+
+      updatePostLikes(post._id);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  const handleFollow = async (email: string, initiatorEmail: string) => {
+    // console.log("Follow request received for ", email);
+    // console.log("Follow request initiated by ", initiatorEmail);
+
+    if (email === initiatorEmail) {
+      // console.log("Already following Youself");
+      return null;
+    }
+
+    if (!initiatorEmail || initiatorEmail.length === 0) {
+      router.push("/login");
+    } else {
+      try {
+        const followResponse = await axios.get(
+          `/api/users/?emailA=${email}&emailB=${initiatorEmail}`
+        );
+
+        // console.log(followResponse.data);
+      } catch (error: any) {
+        console.log(error);
+      }
+    }
+  };
+
+  const toggleComment = (post: Post) => {
+    // console.log("Toggle comment received");
+    setCommentSection(!commentSection);
+    setCommentPost(post);
+  };
+
+  const toggleShare = (post: Post) => {
+    // console.log("Toggle comment received");
+    setShareSection(!shareSection);
+    setSharePost(post);
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
+    <>
+      <PostGrid
+        style={{
+          display: "flex",
+          justifyContent: "space-around",
+          gap: "1.2em",
+        }}
+      >
+        {postsLS?.map((post) => (
+          <Card key={post.title}>
+            <UserInfo
+              style={{
+                alignItems: "center",
+                gap: "0.1em",
+              }}
+            >
+              <ProfileImage
+                src={post?.image!}
+                alt={"user"}
+                width={50}
+                height={50}
+                layout="fixed"
+                onClick={() => router.push(`/${post.email}`)}
+                style={{
+                  cursor: "pointer",
+                }}
+              />
+              <Username>{post.userName}</Username>
+              <Button
+                size={"0.9em"}
+                background={"black"}
+                color={"white"}
+                hoverText={"black"}
+                hoverBackground={"white"}
+                style={{ marginLeft: "10px" }}
+                onClick={() => handleFollow(post?.email, session?.user?.email!)}
+                disabled={!session}
+              >
+                Follow
+              </Button>
+            </UserInfo>
+
+            <CardTitle>{post.title}</CardTitle>
+            <CardImageContainer>
+              <CardImage
+                src={post.cover}
+                alt={post.title}
+                width={300}
+                height={300}
+                layout="fixed"
+                loading="lazy"
+                style={{
+                  borderRadius: "1em",
+                }}
+              />
+            </CardImageContainer>
+            <CardDescription
+              style={{
+                fontSize: "medium",
+                marginTop: "0",
+              }}
+            >
+              {post.description}
+            </CardDescription>
+            <CardFooter>
+              <LikeButton onClick={() => likeAPost(post)}>
+                {post?.likes.toString()}
+                <Like />
+              </LikeButton>
+              <CommentButton onClick={() => toggleComment(post)}>
+                {post?.comments?.length}
+                <Comment />
+              </CommentButton>
+              <ShareButton onClick={() => toggleShare(post)}>
+                {post?.shares.toString()}
+                <Share />
+              </ShareButton>
+            </CardFooter>
+          </Card>
+        ))}
+      </PostGrid>
+
+      {commentSection && commentPost && (
+        <div
+          className={`comment-section ${commentSection ? "active" : ""}`}
+          ref={commentSectionRef}
+        >
+          <div className="comment-section-header">
+            <h2>Comments</h2>
+          </div>
+          <div className="comment-section-content">
+            <CommentSection
+              post={commentPost}
+              setCommentSection={setCommentSection}
             />
-          </a>
+          </div>
         </div>
-      </div>
+      )}
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
+      {shareSection && sharePost && (
+        <div
+          className={`share-section ${shareSection ? "active" : ""}`}
+          ref={shareSectionRef}
         >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+          <div className="share-section-header">
+            <h2>Share</h2>
+          </div>
+          <div className="share-section-content">
+            <ShareSection post={sharePost} setShareSection={setShareSection} />
+          </div>
+        </div>
+      )}
+      </>
+  );
 }
