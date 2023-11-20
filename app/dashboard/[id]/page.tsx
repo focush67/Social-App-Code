@@ -1,6 +1,7 @@
 "use client";
 
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Inbox from "@/components/Chat/ChatBox";
 import {
@@ -22,6 +23,11 @@ export interface Profile {
 
 const MessageDashboard = ({ params, mail, post, setShareSection }: any) => {
   const { data: session } = useSession();
+  const router = useRouter();
+  if(!session){
+    router.push("/");
+  }
+  
   console.log("Post received: ", post);
   console.log("Params: ", params);
 
