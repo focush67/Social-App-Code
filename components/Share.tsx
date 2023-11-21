@@ -22,13 +22,17 @@ const ShareSection = ({ post, setShareSection }: any) => {
   return (
     <div style={{
         display:"flex",
+        flexDirection:"row",
         alignItems:"center",
-        justifyContent:"center",
         maxHeight:"50vh",
         width:"fit-content",
+        minWidth:"100vw",
         border:"1px solid black",
-        fontSize:"90%"
+        fontSize:"100%"
     }}>
+      <div style={{
+        flex:2,
+      }}>
       <Card key={post.title}>
         <UserInfo>
           <ProfileImage
@@ -45,7 +49,7 @@ const ShareSection = ({ post, setShareSection }: any) => {
             color={"white"}
             hoverText={"black"}
             hoverBackground={"white"}
-            style={{ marginLeft: "auto",pointerEvents:"none", }}
+            style={{ marginLeft: "auto",pointerEvents:"none"}}
             disabled={!session}
           >
             Follow
@@ -65,9 +69,13 @@ const ShareSection = ({ post, setShareSection }: any) => {
         </CardImageContainer>
         <CardDescription style={{fontSize:"90%"}}>{post.description}</CardDescription>
       </Card>
+      </div>
+      
       <div style={{
+        flex:1,
         marginTop:"auto",
-        alignItems:"center"
+        alignItems:"center",
+        width:"100%"
       }}>
         <MessageDashboard mail={session?.user?.email} post={post} setShareSection={setShareSection} />
       </div>

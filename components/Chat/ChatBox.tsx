@@ -201,12 +201,14 @@ const Inbox = ({ params, setOpenMessagePanel, setCloseThisPanel, post }:any) => 
                 <SentMessage>
                   <MessageContent>
                     <ReceiverProfileImage
-                      src={conversation.sender_image}
+                      src={conversation?.sender_image}
                       alt="Profile"
                     />
                     {conversation.content ? (
                       <>
-                      <MessageText>{conversation.content}</MessageText>
+                      <MessageText style={{
+                        fontSize:"93%"
+                      }}>{conversation?.content}</MessageText>
                       {
                         <Timestamp>
                         {new Date(conversation.createdAt).toLocaleString()} 
@@ -217,10 +219,10 @@ const Inbox = ({ params, setOpenMessagePanel, setCloseThisPanel, post }:any) => 
                     ) : (
                       <>
                       <div style={{ width: 'fit-content' }}>
-                        <PostCard post={conversation.post[0]} />
+                        <PostCard post={conversation?.post[0]} />
                       </div>
                       <Timestamp>
-                        {new Date(conversation.createdAt).toLocaleString()} 
+                        {new Date(conversation?.createdAt).toLocaleString()} 
                       </Timestamp>
                       </>
                     )}
@@ -230,12 +232,14 @@ const Inbox = ({ params, setOpenMessagePanel, setCloseThisPanel, post }:any) => 
                 <ReceivedMessage>
                   <MessageContent>
                     <ReceiverProfileImage
-                      src={conversation.sender_image}
+                      src={conversation?.sender_image}
                       alt="Profile"
                     />
-                    {conversation.content ? (
+                    {conversation?.content ? (
                       <>
-                      <MessageText>{conversation.content}</MessageText>
+                      <MessageText style={{
+                        fontSize:"94%"
+                      }}>{conversation.content}</MessageText>
                       <Timestamp>
                         {new Date(conversation.createdAt).toLocaleString()} 
                       </Timestamp>
@@ -243,7 +247,7 @@ const Inbox = ({ params, setOpenMessagePanel, setCloseThisPanel, post }:any) => 
                     ) : (
                       <>
                       <div style={{ width: 'fit-content' }}>
-                        <PostCard post={conversation.post[0]} />
+                        <PostCard post={conversation?.post[0]} />
                       </div>
                       <Timestamp>
                       {new Date(conversation.createdAt).toLocaleString()} 
