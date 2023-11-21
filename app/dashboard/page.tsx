@@ -80,11 +80,16 @@ const UserDetails = () => {
   }
 
   return (
-    <div>
+    <div style={{
+      display:"flex",
+      flexDirection:"column",
+      justifyContent:"center"
+    }}>
       <UserDetailsContainer style={{
         display:"flex",
         flexDirection:"row",
-        justifyContent:"space-around"
+        fontSize:"2vw",
+        justifyContent:"space-between"
 
       }}>
         <ProfileImage
@@ -113,7 +118,7 @@ const UserDetails = () => {
           onClick={() => router.push("/dashboard/new")}
           disabled={!session}
         >
-          New post
+          New
         </Button>
       </UserDetailsContainer>
 

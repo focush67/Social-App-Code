@@ -24,10 +24,10 @@ export interface Profile {
 const MessageDashboard = ({ params, mail, post, setShareSection }: any) => {
   const { data: session } = useSession();
   const router = useRouter();
-  if(!session){
+  if (!session) {
     router.push("/");
   }
-  
+
   console.log("Post received: ", post);
   console.log("Params: ", params);
 
@@ -82,7 +82,9 @@ const MessageDashboard = ({ params, mail, post, setShareSection }: any) => {
     if (filteredRelationshipsArray.length > 0) {
       // Fetch profiles for each email in the relationships array only once
       Promise.all(
-        filteredRelationshipsArray.map((email:any) => fetchProfileByEmail(email))
+        filteredRelationshipsArray.map((email: any) =>
+          fetchProfileByEmail(email)
+        )
       )
         .then((profiles) => {
           // Update the profiles state with the fetched profiles
@@ -95,9 +97,7 @@ const MessageDashboard = ({ params, mail, post, setShareSection }: any) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filteredRelationshipsArray.length]);
 
-  useEffect(() => {
-
-  },[filteredRelationshipsArray])
+  useEffect(() => {}, [filteredRelationshipsArray]);
 
   const handleMessageSubmission = async (profile: Profile) => {
     // setReceiver(profile);
@@ -116,7 +116,10 @@ const MessageDashboard = ({ params, mail, post, setShareSection }: any) => {
   };
 
   return (
-    <MessagesContainer>
+    
+    <MessagesContainer style={{
+      height:"85vh"
+    }}>
       {params && <h1>Inbox</h1>}
 
       {!closeThisPanel && (
@@ -153,6 +156,7 @@ const MessageDashboard = ({ params, mail, post, setShareSection }: any) => {
           post={post}
         />
       )}
+
     </MessagesContainer>
   );
 };

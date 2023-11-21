@@ -546,7 +546,6 @@ export const UserName = styled.div`
 export const MessagesContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: fit-content;
 `;
 
 

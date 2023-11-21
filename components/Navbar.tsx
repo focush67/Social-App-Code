@@ -70,7 +70,7 @@ const Navbar = () => {
   const router = useRouter();
   const [isMenuOpen, setMenuOpen] = useState(false);
 
-  const isMobile = useMediaQuery('(max-width: 450px)');
+  const isMobile = useMediaQuery("(max-width: 450px)");
 
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
@@ -101,7 +101,12 @@ const Navbar = () => {
                 gap: "1rem",
               }}
             >
-              <MessageIcon />
+              <NavProfileImage
+                src={session?.user?.image!}
+                alt={session?.user?.name || "user"}
+                width={40}
+                height={40}
+              />
               <NavLink
                 style={{ marginTop: "auto" }}
                 href={`/dashboard/${session?.user?.email}`}
@@ -170,11 +175,50 @@ const Navbar = () => {
 
       <Drawer anchor="top" open={isMenuOpen} onClose={toggleMenu}>
         <StyledDrawerContent>
-          <Toggle />
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+           {
+            session ? (
+              <>
+              <NavProfileImage
+              src={session?.user?.image!}
+              alt={session?.user?.name || "user"}
+              width={50}
+              height={40}
+              layout="fixed"
+            />
+            <NavLink
+              style={{ marginTop: "auto" }}
+              href={`/dashboard/${session?.user?.email}`}
+            >
+              <MessageIcon />
+            </NavLink>
+            </>
+            ) : (
+              <div></div>
+            )
+           }
+            <Toggle />
+          </div>
+
           <NavLink href={"/"}>Home</NavLink>
           <NavLink href={"/dashboard"}>Dashboard</NavLink>
+
           {session ? (
             <>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "1rem",
+                }}
+              ></div>
               <Button
                 background="red"
                 color="white"
@@ -217,4 +261,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
