@@ -423,12 +423,14 @@ export const CommentSectionContainer = styled.div`
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  width: 100%;
   height: max-content;
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
   scroll-behavior: smooth;
+  border: 2px solid black;
+  width: 100%;
+  max-height:60vh;
+  overflow-y: scroll;
 `;
 
 export const UserImage = styled(Image)`

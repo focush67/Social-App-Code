@@ -169,11 +169,17 @@ const NewPost = () => {
 
           <LabelWrapper>
             <FormLabel>Picture</FormLabel>
+            <div style={{
+              display:"flex",
+              
+            }}>
             <ImageUpload
               cluster="first"
               title={post.title}
               onImageUpload={handleImageUpload}
             />
+          
+            </div>
           </LabelWrapper>
         </LabelWrapper>
         <LabelWrapper>

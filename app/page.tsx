@@ -22,6 +22,7 @@ import {
   Username,
   Button,
   CardImageContainer,
+  AlertContainer,
 } from "@/globals/GlobalStyles";
 
 import { Like, Comment, Share } from "@/globals/GlobalIcons";
@@ -33,7 +34,7 @@ import ShareSection from "@/components/Share";
 export default function Home() {
   const commentSectionRef = useRef<HTMLDivElement | null>(null);
   const shareSectionRef = useRef<HTMLDivElement | null>(null);
-
+  const [alertMessage,setAlertMessage] = useState<string>("");
   const [commentSection, setCommentSection] = useState(false);
   const [commentPost, setCommentPost] = useState<Post>();
   const [sharePost, setSharePost] = useState<Post>();
@@ -87,6 +88,10 @@ export default function Home() {
   }, [commentSection, shareSection]);
 
   const likeAPost = async (post: Post) => {
+    if(!session){
+      alert("Login required");
+      return;
+    }
     try {
       const response = await axios.post(
         `/api/post-update/?email=${post?.email}&id=${post._id}`
@@ -108,6 +113,11 @@ export default function Home() {
     // console.log("Follow request received for ", email);
     // console.log("Follow request initiated by ", initiatorEmail);
 
+    if(!session){
+      alert("Login required");
+      console.log("login required")
+      return;
+    }
     if (email === initiatorEmail) {
       // console.log("Already following Youself");
       return null;
@@ -147,6 +157,7 @@ export default function Home() {
           display: "flex",
           justifyContent: "space-around",
           gap: "1.2em",
+          height:"100%"
         }}
       >
         {postsLS?.map((post) => (

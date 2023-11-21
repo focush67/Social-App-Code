@@ -83,14 +83,13 @@ const UserDetails = () => {
     <div style={{
       display:"flex",
       flexDirection:"column",
-      justifyContent:"center"
+      justifyContent:"center",
     }}>
       <UserDetailsContainer style={{
         display:"flex",
         flexDirection:"row",
-        fontSize:"2vw",
-        justifyContent:"space-between"
-
+        fontSize:"2.5vw",
+        justifyContent:"space-between",
       }}>
         <ProfileImage
           src={session?.user?.image!}

@@ -7,7 +7,6 @@ import { getServerSession } from "next-auth";
 import SessionProvider from "@/components/SessionProvider";
 import { Main } from "@/globals/GlobalStyles";
 const inter = Inter({ subsets: ["latin"] });
-
 export const metadata: Metadata = {
   title: "iSocial",
   description: "Social Media App for Professionals",
