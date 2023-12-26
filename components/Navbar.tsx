@@ -10,7 +10,7 @@ import {
   NavLink,
   NavProfileImage,
 } from "@/globals/GlobalStyles";
-import { signOut } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Toggle from "./ToggleMode";
@@ -131,7 +131,8 @@ const Navbar = () => {
               />
               <NavLink
                 style={{ marginTop: "auto" }}
-                href={`/dashboard/${session?.user?.email}`}
+                href="https://chatter-woad-nine.vercel.app"
+                target="_blank"
               >
                 <MessageIcon />
               </NavLink>
@@ -154,11 +155,11 @@ const Navbar = () => {
                 size="1rem"
                 hoverBackground="green"
                 hoverText="white"
-                onClick={() => router.push("/login")}
+                onClick={() => signIn("google")}
               >
                 Login
               </Button>
-              <Button
+              {/* <Button
                 background="darkBlue"
                 color="white"
                 size="1rem"
@@ -167,7 +168,7 @@ const Navbar = () => {
                 onClick={() => router.push("/register")}
               >
                 SignUp
-              </Button>
+              </Button> */}
             </>
           )}
         </StyledNavLinks>
