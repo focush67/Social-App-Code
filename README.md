@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# iSocial: A Social Blogging App
 
-## Getting Started
+## Overview
 
-First, run the development server:
+iSocial is a social blogging app that allows users to register, share pictures of their activities, and connect with others through a centralized wall. Users can follow each other, communicate via real-time chat, and manage their posts through a dedicated dashboard.
+
+## Features
+
+- **User Registration and Authentication**
+- **Centralized Wall for All Posts**
+- **Post Pictures and Activities**
+- **Follow Other Users and Establish Two-Way Friendships**
+- **Real-Time Chat (Feature in Progress)**
+- **Dedicated User Dashboard**
+- **Firebase Integration for Post Storage**
+- **NextAuth for Authentication and Session Management**
+
+## Tech Stack
+
+- **Next.js 13**
+- **TypeScript**
+- **MongoDB**
+- **Firebase**
+- **NextAuth**
+- **Redis**
+- **Tailwind CSS**
+
+## Dependencies
+
+- **Material UI**
+- **React Font Awesome**
+- **React Hot Toast**
+- **React Icons**
+- **Styled Components**
+- **Axios (for Backend Requests)**
+- **Bcrypt and Bcryptjs (Password Hashing)**
+- **Firebase (Post Storage)**
+- **Mongoose ORM (MongoDB Connection)**
+- **NextAuth (Authentication and Session Provider)**
+
+## Configurations
+- **Create a Firebase storage to replicate the post storing capability**
+- **Configure MongoDB and obtain connection string for database connections**
+- **Set up NextAuth for email providers , or other providers depending upon preference and usability**
+
+## Contributions
+Contributions are welcome. Feel free to open issues and pull requests. 
+
+## License
+This project is licensed under the MIT License
+
+## Installation
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+# Clone the repository
+git clone <repository-url>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+# Install dependencies
+npm install
