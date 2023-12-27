@@ -84,12 +84,14 @@ const UserDetails = () => {
       display:"flex",
       flexDirection:"column",
       justifyContent:"center",
+      
     }}>
       <UserDetailsContainer style={{
         display:"flex",
         flexDirection:"row",
-        fontSize:"2.5vw",
+        fontSize:"2vw",
         justifyContent:"space-between",
+        alignItems:"center",
       }}>
         <ProfileImage
           src={session?.user?.image!}
@@ -109,7 +111,7 @@ const UserDetails = () => {
           </Followers>
         </UserInfo>
         <Button
-          size={"1em"}
+          size={"1.2em"}
           background={"darkblue"}
           color={"white"}
           hoverBackground={"mediumblue"}

@@ -1,16 +1,15 @@
-import bcrypt from "bcrypt";
 import { NextRequest, NextResponse } from "next/server";
 import connect from "@/utilities/mongoose";
-import { User } from "@/models/UserSchema";
+import { App_User } from "@/models/UserSchema";
 export const POST = async (request: NextRequest) => {
  
   const body = await request.json();
-  const { username, email, image, password } = body.formData;
-  console.log("User : ", body);
+  const { username, email, image } = body.formData;
+  console.log("User : ", body.formData);
   connect();
 
   try {
-    const existing = await User.findOne({ email });
+    const existing = await App_User.findOne({ email });
 
     if (existing) {
       return NextResponse.json({
@@ -19,12 +18,9 @@ export const POST = async (request: NextRequest) => {
       });
     }
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-    const newUser = await User.create({
+    const newUser = await App_User.create({
       email,
       name: username,
-      password: hashedPassword,
       image,
     });
 

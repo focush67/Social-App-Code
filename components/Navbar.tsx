@@ -109,7 +109,7 @@ const Navbar = () => {
               />
               <NavLink
                 style={{ marginTop: "auto" }}
-                href={`/dashboard/${session?.user?.email}`}
+                href={""}
               ></NavLink>
             </div>
           )}
@@ -159,16 +159,6 @@ const Navbar = () => {
               >
                 Login
               </Button>
-              {/* <Button
-                background="darkBlue"
-                color="white"
-                size="1rem"
-                hoverBackground="mediumBlue"
-                hoverText="white"
-                onClick={() => router.push("/register")}
-              >
-                SignUp
-              </Button> */}
             </>
           )}
         </StyledNavLinks>
@@ -195,7 +185,7 @@ const Navbar = () => {
             />
             <NavLink
               style={{ marginTop: "auto" }}
-              href={`/dashboard/${session?.user?.email}`}
+              href={`https://chatter-woad-nine.vercel.app/login`}
             >
               <MessageIcon />
             </NavLink>
@@ -239,19 +229,9 @@ const Navbar = () => {
                 size="1rem"
                 hoverBackground="green"
                 hoverText="white"
-                onClick={() => router.push("/login")}
+                onClick={() => signIn("google")}
               >
                 Login
-              </Button>
-              <Button
-                background="darkBlue"
-                color="white"
-                size="1rem"
-                hoverBackground="mediumBlue"
-                hoverText="white"
-                onClick={() => router.push("/register")}
-              >
-                SignUp
               </Button>
             </>
           )}

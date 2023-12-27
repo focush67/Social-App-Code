@@ -3,10 +3,9 @@ import { Schema,models,model } from "mongoose";
 export const Profile = new Schema({
     email: {type: String, required: true},
     name: {type: String, required: true},
-    password: {type: String,required: true},
     image: {type: String},
     followers: [{
-        type: String
+        type: String,
     }],
     following: [{
         type: String
@@ -15,4 +14,4 @@ export const Profile = new Schema({
     timestamps: true,
 });
 
-export const User = (models?.User || model("User",Profile));
+export const App_User = (models?.App_User || model("App_User",Profile));

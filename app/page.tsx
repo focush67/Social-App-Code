@@ -65,6 +65,29 @@ export default function Home() {
     };
   }, [commentSection, savePostsToLocalStorage]);
 
+
+  useEffect(() => {
+    const registerNewUser = async() => {
+        if(session && session?.user){
+          const formData = {
+            username: session.user?.name,
+            email: session.user?.email,
+            image: session.user?.image
+          }
+          console.log(formData);
+          try {
+            const response = await axios.post("/api/register", {
+              formData
+            });
+          } catch (error:any) {
+            console.log(error.message);
+          }
+        }
+    }
+
+    registerNewUser();
+  },[session])
+
   useEffect(() => {
     const handleStrayClicks = (e: any) => {
       if (

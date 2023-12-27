@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import connect from "@/utilities/mongoose";
-import { User } from "@/models/UserSchema";
+import { App_User } from "@/models/UserSchema";
 export const GET = async (request: NextRequest) => {
   console.log("GET request received");
   const x = process.env.NEXT_PUBLIC_MONGO_URI;
@@ -12,7 +12,7 @@ export const GET = async (request: NextRequest) => {
   connect();
   const email = request.nextUrl.searchParams.get("email");
   if (email) {
-    const user = await User.findOne({ email });
+    const user = await App_User.findOne({ email });
     if (!user) {
       return NextResponse.json({
         message: `User not found`,
@@ -39,8 +39,8 @@ export const GET = async (request: NextRequest) => {
     }
 
     try {
-      const mainAccount = await User.findOne({ email: emailA });
-      const initiatorAccount = await User.findOne({ email: emailB });
+      const mainAccount = await App_User.findOne({ email: emailA });
+      const initiatorAccount = await App_User.findOne({ email: emailB });
 
       if (
         mainAccount.followers.includes(emailB) &&
