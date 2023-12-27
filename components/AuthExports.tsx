@@ -1,12 +1,9 @@
 
-import { NextAuthOptions } from "next-auth";
 import {MongoDBAdapter} from "@auth/mongodb-adapter";
-import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcrypt";
-import connect from "@/utilities/mongoose";
 import GoogleProvider from 'next-auth/providers/google';
 import clientPromise from "@/utilities/mongodb";
-export const authOptions: NextAuthOptions = {
+export const authOptions = {
+    adapter: MongoDBAdapter(clientPromise),
     providers:[
         GoogleProvider({
             clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
@@ -20,9 +17,7 @@ export const authOptions: NextAuthOptions = {
         strategy:"jwt",
         maxAge: 12*60*60,
     },
-
-    adapter: MongoDBAdapter(clientPromise),
-
+    
     authorization:{
         url: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET,
         params:{
