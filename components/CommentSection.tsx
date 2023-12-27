@@ -32,7 +32,7 @@ function CommentSection({
     }
     try {
       const response = await axios.post(
-        `/api/post-update/?type=addComment&from=${session?.user?.email}&comment=${comment}&id=${post._id}`,
+        `${process.env.NEXTAUTH_URL}/api/post-update/?type=addComment&from=${session?.user?.email}&comment=${comment}&id=${post._id}`,
         {
           imageUrl: session?.user?.image,
         }

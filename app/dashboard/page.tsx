@@ -41,7 +41,7 @@ const UserDetails = () => {
 
   useEffect(() => {
     const fetchUserPosts = async () => {
-      const response = await axios.get(`/api/posts/?email=${email}`);
+      const response = await axios.get(`${process.env.NEXTAUTH_URL}/api/posts/?email=${email}`);
       if (!response.data.posts) return null;
       setUserPosts(response.data.posts);
       setUserPostLS(JSON.parse(localStorage.getItem("All_Posts") || ""));
@@ -51,7 +51,7 @@ const UserDetails = () => {
 
     const fetchUserDetails = async () => {
       const response = await axios.get(
-        `/api/users/?email=${session?.user?.email}`
+        `${process.env.NEXTAUTH_URL}/api/users/?email=${session?.user?.email}`
       );
       setUserDetails(response?.data?.user);
     };
@@ -66,7 +66,7 @@ const UserDetails = () => {
   const handlePostDelete = async(post: Post) => {
     console.log("Post received for deletion: ",post);
     try {
-      const response = await axios.delete(`/api/post-update/?_id=${post._id}`);
+      const response = await axios.delete(`${process.env.NEXTAUTH_URL}/api/post-update/?_id=${post._id}`);
       console.log(response.data);
 
       setUserPostLS((prevUserPostsLS) => {
@@ -111,7 +111,7 @@ const UserDetails = () => {
           </Followers>
         </UserInfo>
         <Button
-          size={"1.2em"}
+          size={"1em"}
           background={"darkblue"}
           color={"white"}
           hoverBackground={"mediumblue"}

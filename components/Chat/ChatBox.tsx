@@ -130,7 +130,7 @@ const Inbox = ({ params, setOpenMessagePanel, setCloseThisPanel, post }:any) => 
 
   useEffect(() => {
     const fetchUserDetails = async () => {
-      const response = await axios.get(`/api/users/?email=${inboxFromUser}`);
+      const response = await axios.get(`${process.env.NEXTAUTH_URL}/api/users/?email=${inboxFromUser}`);
       setUser(response.data.user);
     };
     fetchUserDetails();
@@ -139,7 +139,7 @@ const Inbox = ({ params, setOpenMessagePanel, setCloseThisPanel, post }:any) => 
   useEffect(() => {
     const fetchMessages = async () => {
       const response = await axios.get(
-        `/api/messages/?sender=${session?.user?.email}&receiver=${inboxFromUser}`
+        `${process.env.NEXTAUTH_URL}/api/messages/?sender=${session?.user?.email}&receiver=${inboxFromUser}`
       );
       const conversations1 = response.data?.conversations;
       const conversations2 = response.data?.conversations2;
@@ -156,7 +156,7 @@ const Inbox = ({ params, setOpenMessagePanel, setCloseThisPanel, post }:any) => 
     const imageUrl = session?.user?.image;
     const from = session?.user?.email;
     const response = await axios.post(
-      `/api/messages/?content=${content}&sender=${from}&receiver=${inboxFromUser}`,
+      `${process.env.NEXTAUTH_URL}/api/messages/?content=${content}&sender=${from}&receiver=${inboxFromUser}`,
       {
         imageUrl: imageUrl,
         post: post,

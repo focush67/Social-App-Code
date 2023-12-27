@@ -2,7 +2,7 @@
 import { MongoClient,MongoClientOptions } from "mongodb";
 
 if (!process.env.NEXT_PUBLIC_MONGO_URI) {
-  throw new Error('Invalid/Missing environment variable: "MONGO_URI"');
+  throw new Error(`Invalid/Missing environment variable MONGO_URI : ${process.env.NEXT_PUBLIC_MONGO_URI}` );
 }
 
 const IS_DEVELOPEMENT = process.env.NODE_ENV === "development";
