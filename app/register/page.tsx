@@ -47,7 +47,7 @@ const SignupForm = () => {
     if (isCoverUploaded) {
       try {
         setImageUploading(true);
-        const response = await fetch(`${process.env.NEXTAUTH_URL}/api/register`, {
+        const response = await fetch(`/api/register`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

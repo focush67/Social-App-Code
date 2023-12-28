@@ -5,12 +5,13 @@ import styled from "styled-components";
 import Image from "next/image";
 
 interface ButtonProps{
-    background: string;
-    color: string;
-    hoverText: string;
-    hoverBackground: string;
-    size: string;
+    background?: string;
+    color?: string;
+    hoverText?: string;
+    hoverBackground?: string;
+    size?: string;
     disabled?: string | boolean;
+    onClick?:() => void
 }
 
 interface ClickButton{
@@ -649,4 +650,3 @@ export const ChatMessage = styled.div`
   margin: 5px;
   border-radius: 5px;
 `;
-

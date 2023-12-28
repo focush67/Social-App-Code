@@ -48,7 +48,7 @@ const MessageDashboard = ({ params, mail, post, setShareSection }: any) => {
   useEffect(() => {
     const fetchUserDetails = async () => {
       if (!email) return null;
-      const response = await axios.get(`${process.env.NEXTAUTH_URL}/api/users/?email=${email}`);
+      const response = await axios.get(`/api/users/?email=${email}`);
 
       const newRelationShips = [
         ...response?.data?.user?.followers,
@@ -75,7 +75,7 @@ const MessageDashboard = ({ params, mail, post, setShareSection }: any) => {
   useEffect(() => {
     // Create a function to fetch profiles using an email
     const fetchProfileByEmail = async (email: string) => {
-      const response = await axios.get(`${process.env.NEXTAUTH_URL}/api/users/?email=${email}`);
+      const response = await axios.get(`/api/users/?email=${email}`);
       return response.data.user;
     };
 
@@ -105,7 +105,7 @@ const MessageDashboard = ({ params, mail, post, setShareSection }: any) => {
     const imageUrl = session?.user?.image;
     const from = session?.user?.email;
     const response = await axios.post(
-      `${process.env.NEXTAUTH_URL}/api/messages/?&sender=${from}&receiver=${profile?.email}`,
+      `/api/messages/?&sender=${from}&receiver=${profile?.email}`,
       {
         imageUrl: imageUrl,
         post: post,

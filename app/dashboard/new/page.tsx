@@ -119,7 +119,7 @@ const NewPost = () => {
     else if (isCoverUploaded) {
       try {
         setImageUploading(true);
-        const response = await axios.post(`${process.env.NEXTAUTH_URL}/api/posts/?email=${post?.email}`, {
+        const response = await axios.post(`/api/posts/?email=${post?.email}`, {
           post: JSON.stringify(post),
         });
         // console.log(response.data);

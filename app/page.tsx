@@ -79,6 +79,7 @@ export default function Home() {
             const response = await axios.post("/api/register", {
               formData
             });
+            console.log("Frontend: ",response.data);
           } catch (error:any) {
             console.log(error.message);
           }

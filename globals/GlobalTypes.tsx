@@ -1,5 +1,16 @@
 import { ReactNode } from "react";
 
+export interface Profile {
+    email: string;
+    name: string;
+    image: string;
+}
+
+export interface FollowersAndFollowings extends Profile{
+    followers: Profile[];
+    following: Profile[];
+}
+
 export interface Message {
     _id?: string;
     content?: string;

@@ -75,12 +75,13 @@ const UserDetailsForVisitor = ({params}:any) => {
         </UserInfo>       
         
       </UserDetailsContainer>
+    
 
       {filteredPosts?.map((post, index) => (
         <PostGrid style={{margin:"1em"}} key={index}>
           <Card key={index} style={{display:"flex",justifyContent:"space-around",alignItems:"center"}} >
             <CardTitle>{post.title}</CardTitle>
-            <CardImage src={post.cover} alt="Post" width={200} height={200} layout="responsive"/>
+            <CardImage src={post.cover} alt="Post" width={200} height={200}/>
             <CardDescription>{post.description}</CardDescription>
             <CardFooter style={{display:"flex",gap:"2em"}}>
               <LikeButton>
