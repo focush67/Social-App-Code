@@ -59,7 +59,9 @@ const UserDetailsForVisitor = ({params}:any) => {
   const filteredPosts = userPostsLS.filter((post:Post) => post.email === email);
   // console.log(filteredPosts);
   return (
-    <div>
+    <div style={{
+      minHeight:"100%"
+    }}>
       <UserDetailsContainer>
         <ProfileImage src={userDetails?.image!} alt="User Profile" width={60} height={60} layout="fixed" />
         <UserInfo>
@@ -73,7 +75,6 @@ const UserDetailsForVisitor = ({params}:any) => {
           <div>{userDetails?.following?.length}</div>
         </Followers>
         </UserInfo>       
-        
       </UserDetailsContainer>
     
 
@@ -100,6 +101,12 @@ const UserDetailsForVisitor = ({params}:any) => {
           </Card>
         </PostGrid>
       ))}
+
+      <div style={{
+        height:"20vh"
+      }}>
+        
+      </div>
     </div>
   );
 };

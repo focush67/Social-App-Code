@@ -24,9 +24,6 @@ export interface Profile {
 const MessageDashboard = ({ params, mail, post, setShareSection }: any) => {
   const { data: session } = useSession();
   const router = useRouter();
-  if (!session) {
-    router.push("/");
-  }
 
   console.log("Post received: ", post);
   console.log("Params: ", params);
@@ -114,6 +111,12 @@ const MessageDashboard = ({ params, mail, post, setShareSection }: any) => {
     // console.log(response.data);
     setShareSection(false);
   };
+
+  useEffect(() => {
+    if (!session) {
+      router.push("/");
+    }
+  },[session])
 
   return (
     
